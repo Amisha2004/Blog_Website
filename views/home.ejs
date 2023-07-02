@@ -1,0 +1,21 @@
+<%- include("partials/header"); -%>
+
+    <h1 class="headlineh1">Literary Expressions</h1>
+    <p class="headline"> <%= startingContent %> </p>
+
+
+    <% posts.forEach(function(post) { %>
+      <p><%= console.log(post) %></p>
+    <% }); %>
+    
+
+    <% posts.forEach(post => { %>
+      <div class="postcontainer">
+      <h1><%= post.title %></h1>
+      <p><%= post.content.substring(0, 100) + " ..." %></p>
+      <a href="/posts/<%= post._id %>">Read More</a>
+    </div>
+    <% }) %>
+    
+
+<%- include("partials/footer"); -%>
