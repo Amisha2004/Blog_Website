@@ -88,7 +88,7 @@ app.delete("/posts/:postId", function(req, res) {
 
 app.get("/posts/:postId/edit", function(req, res) {
   const requestedPostId = req.params.postId;
-
+  console.log(requestedPostId);
   Post.findOne({ _id: requestedPostId })
     .then(post => {
       res.render("compose", {
@@ -101,20 +101,27 @@ app.get("/posts/:postId/edit", function(req, res) {
     .catch(err => {
       console.log(err);
     });
+  Post.findByIdAndDelete(requestedPostId)
+  .then(() => {
+    console.log("deleted");
+  })
+  .catch(err => {
+    console.log(err);
+  });  
 });
 
 
 app.post("/posts/:postId/edit", function(req, res) {
   const postId = req.params.postId;
+  console.log(postId);
   const updatedTitle = req.body.postTitle;
   const updatedContent = req.body.postBody;
 
-  Post.findByIdAndUpdate(
+    Post.findByIdAndUpdate(
     postId,
     { title: updatedTitle, content: updatedContent },
     { new: true }
-  )
-    .then(updatedPost => {
+    ).then(updatedPost => {
       console.log("Post updated:", updatedPost);
       res.redirect("/");
     })
@@ -134,3 +141,4 @@ app.get("/contact", function(req, res) {
 app.listen(3000, function() {
   console.log("Server started on port 3000");
 });
+
