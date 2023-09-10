@@ -86,7 +86,7 @@ app.delete("/posts/:postId", function(req, res) {
     });
 });
 
-app.get("/posts/:postId/edit", function(req, res) {
+app.post("/posts/:postId/edit", function(req, res) {
   const requestedPostId = req.params.postId;
   console.log(requestedPostId);
   Post.findOne({ _id: requestedPostId })
@@ -111,25 +111,6 @@ app.get("/posts/:postId/edit", function(req, res) {
 });
 
 
-app.post("/posts/:postId/edit", function(req, res) {
-  const postId = req.params.postId;
-  console.log(postId);
-  const updatedTitle = req.body.postTitle;
-  const updatedContent = req.body.postBody;
-
-    Post.findByIdAndUpdate(
-    postId,
-    { title: updatedTitle, content: updatedContent },
-    { new: true }
-    ).then(updatedPost => {
-      console.log("Post updated:", updatedPost);
-      res.redirect("/");
-    })
-    .catch(err => {
-      console.error(err);
-    });
-});
-
 app.get("/about", function(req, res) {
   res.render("about", { aboutContent: aboutContent });
 });
@@ -141,4 +122,3 @@ app.get("/contact", function(req, res) {
 app.listen(3000, function() {
   console.log("Server started on port 3000");
 });
-
